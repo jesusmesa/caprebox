@@ -1,0 +1,96 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h3>Punto de venta</h3>
+               
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for=""><b>Tipo de venta:</b></label>
+                        <select name="" id="" class="form-control">
+                            <option value="">Contado</option>
+                            <option value="">Credito</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for=""><b>Plazos:</b></label>
+                        <select name="" id="" class="form-control" disabled>
+                            <option value="">3</option>
+                            <option value="">6</option>
+                            <option value="">12</option>        
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for=""><b>Fecha:</b></label>
+                        <input type="text" value="{{fecha}}" class="form-control" readonly>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="" class="my-1 mr-sm-2"><b>Num Cliente:</b></label>
+                        <input type="text" class="form-control" [(ngModel)]="id" (keyup.enter)="searchCustomer()">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="" class="my-1 mr-sm-2"><b>Nombre:</b></label>
+                        <input type="text" class="form-control" readonly value="{{customer?.primer_nombre}} {{customer?.segundo_nombre}} {{customer?.primer_apellido}} {{customer?.segundo_apellido}}">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="" class="my-1 mr-sm-2"><b>Direccion:</b></label>
+                        <input type="text" class="form-control" readonly value="{{customer?.direccion}}">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="" class="my-1 mr-sm-2"><b>CURP:</b></label>
+                        <input type="text" class="form-control" readonly value="{{customer?.curp}}">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for=""><b>Producto:</b></label>
+                        <input type="text" class="form-control" [(ngModel)]="idProduct" (keyup.enter)="searchProduct()">
+                    </div>
+                </div>
+                <hr>
+                <h5 class="float-right mx-1">Cantidad productos: {{products.length}}</h5>
+
+                <div class="table-responsive" style="max-height: 300px;">
+                    <table class="table">
+                        <thead>
+                            <th>ID</th>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Imagen</th>
+                            <th>Opc</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let product of products">
+                                <td>{{product.id}}</td>
+                                <td>{{product.nombre}}</td>
+                                <td>{{product.cantidad}}</td>
+                                <td>${{product.precio}}</td>
+                                <td><img src="{{product.imagen}}" alt="" width="100px"></td>
+                                <td>
+                                    <button class="btn btn-sm btn-warning" (click)="deleteProduct(product)">X</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h5 *ngIf="total > 0" class="float-right mx-4">Total: ${{total}} </h5><br>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <button class="btn btn-success float-right">Generar</button>
+                            <button class="btn btn-danger float-right mx-1">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

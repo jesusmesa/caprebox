@@ -1,0 +1,62 @@
+ <!-- Sidebar -->
+ <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <div class="sidebar-brand-icon">
+        <img src="https://www.acronis.com/sites/default/public_files/styles/product_top_image/public/product_image/acronis_files_advanced_logo_dark%20%281%29.png?itok=FdI8RLq-" alt="" width="50px">
+      </div>
+      <div class="sidebar-brand-text mx-3">CAPREBOX</div>
+    </a>
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+      Menú
+    </div>
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+      <a class="nav-link" href="#" routerLink="/dashboard" routerLinkActive="active"  aria-expanded="true" aria-controls="collapseTwo">
+        <i class="fa fa-folder"></i>
+        <span>Mis archivos</span>
+      </a>
+    </li>    
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFiles" aria-expanded="true" aria-controls="collapseTwo">
+        <i class="fa fa-plus"></i>
+        <span>Nuevo</span>
+      </a>
+      <div id="collapseFiles" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" routerLink="/new-folder" routerLinkActive="active"><i class="far fa-folder"></i> Carpeta</a>
+          <a class="collapse-item" routerLink="/tables" routerLinkActive="active"><i class="far fa-file"></i> Archivo</a>
+
+        </div>
+      </div>
+    </li>
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+        
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAccess" aria-expanded="true" aria-controls="collapseTwo">
+        <i class="fas fa-fw fa-folder"></i>
+        <span>Acceso</span>
+      </a>
+      <div id="collapseAccess" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" routerLink="/users" routerLinkActive="active"><i class="far fa-circle"></i> Usuarios</a>
+        </div>
+      </div>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+      <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+  </ul>
+  <!-- End of Sidebar -->

@@ -1,0 +1,90 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h3>Usuarios</h3>
+                <h6 class="m-0 font-weight-bold text-primary">Usuarios Registrados ({{totalRows}}) <button class="btn btn-sm btn-primary float-right" (click)="abrirModal()"><i class="fa fa-plus"></i> Agregar</button></h6>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Buscar usuario...">
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Usuario</th>
+                            <th>Opciones</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let user of users">
+                                <td>{{user.id}}</td>
+                                <td>{{user.nombre}}</td>
+                                <td>{{user.correo}}</td>
+                                <td>{{user.usuario}}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-info" style="margin-right: 5px;" ><i class="fa fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-danger" ><i class="fa fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<!--usersModal-->
+
+<div class="modal fade" id="usersModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{title}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="userForm" (ngSubmit)="onSaveForm()">
+            <input type="hidden" formControlName="id">
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Nombre:</label>
+              <input type="text" class="form-control" formControlName="nombre">
+              <div *ngIf="nombre.errors && nombre.dirty">
+                <span *ngIf="nombre.hasError('required')" style="color: red;">*El nombre es requerido</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">Correo:</label>
+              <input type="text" class="form-control" formControlName="correo">
+              <div *ngIf="correo.errors && correo.dirty">
+                <span *ngIf="correo.hasError('required')" style="color: red;">*El correo es requerido</span>
+              </div>
+            </div>
+            <div class="form-group">
+                <label for="message-text" class="col-form-label">Usuario:</label>
+                <input type="text" class="form-control" formControlName="usuario">
+                <div *ngIf="usuario.errors && usuario.dirty">
+                    <span *ngIf="usuario.hasError('required')" style="color: red;">*El usuario es requerido</span>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="message-text" class="col-form-label">Contraseña:</label>
+                <input type="text" class="form-control" formControlName="password">
+              </div>
+            <div class="form-group float-right">
+              <button type="button" class="btn btn-secondary" (click)="closeModal()" style="margin-right: 5px;">Cancelar</button>
+              <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid">Guardar</button>
+            </div>
+          </form>
+        </div>
+       
+      </div>
+    </div>
+  </div>

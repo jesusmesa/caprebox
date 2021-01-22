@@ -1,0 +1,84 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h3>Mesas</h3>
+                <h6 class="m-0 font-weight-bold text-primary">Mesas Registradas ({{totalRows }}) <button class="btn btn-sm btn-primary float-right" (click)="openModal()"><i class="fa fa-plus"></i> Agregar</button></h6>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Buscar mesa..." [(ngModel)]="search" (keyup)="searchTable($event)">
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Descripcion</th>
+                            <td>Estatus</td>
+                            <th>Opciones</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let table of tables">
+                                <td>{{table.id}}</td>
+                                <td>{{table.nombre}}</td>
+                                <td>{{table.descripcion}}</td>
+                                <td>
+                                    <div *ngIf="table.estatus == 1; else noAvailable">
+                                        <span class="badge badge-success">Disponible</span>
+                                    </div>
+                                    <ng-template #noAvailable>
+                                        <span class="badge badge-danger">Ocupada</span>
+                                    </ng-template>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-info" style="margin-right: 5px;" (click)="openModalEdit(table)"><i class="fa fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-danger" (click)="deleteTable(table)"><i class="fa fa-trash"></i></button>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--CategoriesModal-->
+
+<div class="modal fade" id="tablesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{title}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="tablesForm" (ngSubmit)="onSaveForm()">
+            <input type="hidden" formControlName="id">
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Nombre:</label>
+              <input type="text" class="form-control" formControlName="nombre">
+              <div *ngIf="nombre.errors && nombre.dirty">
+                <span *ngIf="nombre.hasError('required')" style="color: red;">*El nombre es requerido</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">Descripcion:</label>
+              <input type="text" class="form-control" formControlName="descripcion">
+            </div>
+            <div class="form-group float-right">
+              <button type="button" class="btn btn-secondary" (click)="closeModal()" style="margin-right: 5px;">Cancelar</button>
+              <button type="submit" class="btn btn-primary" [disabled]="!tablesForm.valid || loading">Guardar</button>
+            </div>
+          </form>
+        </div>
+       
+      </div>
+    </div>
+  </div>

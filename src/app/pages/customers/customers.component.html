@@ -1,0 +1,177 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h3 class="m-0 font-weight-bold text-primary"> Clientes<button class="btn btn-sm btn-primary float-right" (click)="showModal()"><i class="fa fa-plus"></i> Agregar</button></h3>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Buscar cliente..." [(ngModel)]="search" (keyup)="searchCustomer($event)">
+                </div>
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Direccion</th>
+                            <th>Genero</th>
+                            <th>Estado Civil</th>
+                            <th>Fecha Nacimiento</th>
+                            <th>RFC</th>
+                            <th>CURP</th>
+                            <th>Correo</th>
+                            <th>Fecha Registro</th>
+                            <th>Estatus</th>
+                            <th>Opc</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let customer of customers">
+                                <td>{{customer.id}}</td>
+                                <td>{{customer.primer_nombre}} {{customer.segundo_nombre}} {{customer.primer_apellido}} {{customer.segundo_apellido}}</td> 
+                                <td>{{customer.direccion}}</td>
+                                <td>{{customer.genero}}</td>
+                                <td>{{customer.estado_civil}}</td>
+                                <td>{{customer.fecha_nacimiento.split('T')[0]}}</td>
+                                <td>{{customer.rfc}}</td>
+                                <td>{{customer.curp}}</td>
+                                <td>{{customer.correo}}</td>
+                                <td>{{customer.fecha_registro.split('T')[0]}}</td>
+                                <td>
+                                    <div *ngIf="customer.estatus == 1; else noAvailable">
+                                        <span class="badge badge-success">Habilitado</span>
+                                    </div>
+                                    <ng-template #noAvailable>
+                                        <span class="badge badge-danger">Deshabilitado</span>
+                                    </ng-template>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-info btn-sm" style="margin-left: 5px;" data-toggle="tooltip" data-placement="top" title="Editar" (click)="showModalEdit(customer)"><i class="fa fa-edit"></i></button>
+                                    <button type="button" class="btn btn-success btn-sm" style="margin-left: 5px; margin-top: 5px;" [disabled]="customer.estatus == 1" data-toggle="tooltip" data-placement="top" title="Habilitar" (click)="enableCustomer(customer.id_persona)"><i class="fa fa-check"></i></button>
+                                    <button type="button" class="btn btn-danger btn-sm" style="margin-left: 5px; margin-top: 5px;" [disabled]="customer.estatus == 2" data-toggle="tooltip" data-placement="top" title="Deshabilitar" (click)="disableCustomer(customer.id_persona)"><i class="fa fa-window-close"></i></button>
+                                      
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Customers Modal-->
+
+<div class="modal fade" id="customersModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{title}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="customerForm" (ngSubmit)="onSaveForm()">
+                <div class="row">
+                    <div class="col">
+                        <label for="">Primer Nombre (*):</label>
+                        <input type="text" class="form-control" formControlName="primer_nombre">
+                        <div *ngIf="primer_nombre.errors && primer_nombre.dirty">
+                            <span *ngIf="primer_nombre.hasError('required')" style="color: red;">El primer nombre es requerido</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="">Segundo Nombre:</label>
+                        <input type="text" class="form-control" formControlName="segundo_nombre">
+                    </div>
+                    
+                </div>
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col">
+                        <label for="">Apellido Paterno (*):</label>
+                        <input type="text" class="form-control" formControlName="primer_apellido">
+                        <div *ngIf="primer_apellido.errors && primer_apellido.dirty">
+                            <span *ngIf="primer_apellido.hasError('required')" style="color: red;">El primer apel lido es requerido</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="">Apellido Materno (*):</label>
+                        <input type="text" class="form-control" formControlName="segundo_apellido">
+                        <div *ngIf="primer_apellido.errors && primer_apellido.dirty">
+                            <span *ngIf="primer_apellido.hasError('required')" style="color: red;">El segundo apellido es requerido</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col">
+                        <label for="">Direccion (*):</label>
+                        <input type="text" class="form-control" formControlName="direccion">
+                        <div *ngIf="direccion.errors && direccion.dirty">
+                            <span *ngIf="direccion.hasError('required')" style="color: red;">La direcicon es requerida</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="">Genero (*):</label>
+                        <select name="" id="" class="form-control" formControlName="genero">
+                            <option [ngValue]="null">Seleccione un genero</option>
+                            <option value="M">Masculino</option>
+                            <option value="F">Femenino</option>
+                        </select>
+                        <div *ngIf="genero.errors && genero.dirty">
+                            <span *ngIf="genero.hasError('required')" style="color: red;">Selecione un genero valido</span>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col">
+                        <label for="">Estado civil (*):</label>
+                        <select name="" id="" class="form-control" formControlName="estado_civil">
+                            <option [ngValue]="null">Seleccione un estado civil</option>
+                            <option value="1">Soltero</option>
+                            <option value="2">Casado</option>
+                            <option value="3">Union libre</option>
+                            <option value="4">Divorciado</option>
+                        </select>
+                        <div *ngIf="estado_civil.errors && estado_civil.dirty">
+                            <span *ngIf="estado_civil.hasError('required')" style="color: red;">Selecione un estado civil valido</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="">Fecha de nacimiento (*):</label>
+                        <input type="date" class="form-control" formControlName="fecha_nacimiento">
+                        <div *ngIf="fecha_nacimiento.errors && fecha_nacimiento.dirty">
+                            <span *ngIf="fecha_nacimiento.hasError('required')" style="color: red;">La Fecha de nacimiento es requerida</span>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col">
+                        <label for="">RFC:</label>
+                        <input type="text" class="form-control" formControlName="rfc">
+                    </div>
+                    <div class="col">
+                        <label for="">CURP (*):</label>
+                        <input type="text" class="form-control" formControlName="curp">
+                        <div *ngIf="curp.errors && curp.dirty">
+                            <span *ngIf="curp.hasError('required')" style="color: red;">La CURP es requerida</span>
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col-6">
+                        <label for="">Correo:</label>
+                        <input type="email" class="form-control" formControlName="correo">
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group float-right">
+                    <button type="button" class="btn btn-secondary" (click)="closeModal()" style="margin-right: 5px;">Cancelar</button>
+                    <button type="submit" id="btn-save" class="btn btn-primary" [disabled]="!customerForm.valid">Guardar</button>
+                </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

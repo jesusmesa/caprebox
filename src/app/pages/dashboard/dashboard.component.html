@@ -1,0 +1,17 @@
+<div class="text-center" *ngIf="loading; else main" style="margin-top: 30%;">
+    <div class="spinner-border text-primary textce" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+</div>
+<ng-template #main>
+    <div class="row">
+        <div class="col-md-3 col-sm-4" *ngFor="let folder of folders" >
+            <a href="" style="text-decoration: none; color: black;" data-toggle="tooltip" title="{{folder.description}}"><div>
+                <div class="text-center" >
+                    <i class="fa fa-folder"  style="font-size: 32px;"></i>
+                    <h6 class="text-center">{{folder.name}}</h6>
+                </div>
+            </div></a>
+        </div>
+    </div>
+</ng-template>
